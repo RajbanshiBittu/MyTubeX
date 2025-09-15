@@ -32,7 +32,3 @@ app.use('/api/v1/comment', commentRoutes);
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at Localhost:${process.env.PORT}`);
 })
-
-
-//bearer token
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGFjMjlhODJmZjk4ZmM0NjA5NDliMzIiLCJDaGFubmVsTmFtZSI6IkhlbGxvQml0dHUiLCJlbWFpbCI6ImJpdHR1QGdtYWlsLmNvbSIsInBob25lIjoiODkyNzU2NzIzIiwibG9nb0lkIjoieTJ3cHF4Znk0cjhnNmc0bHlkbnIiLCJpYXQiOjE3NTYxMTMzNjYsImV4cCI6MTc1Njk3NzM2Nn0.fTimB0l1IVJUBlUup0D_i5RG-4Ak82bfkOh0F9JynEs
