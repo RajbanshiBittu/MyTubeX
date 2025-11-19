@@ -6,15 +6,14 @@ import jwt from 'jsonwebtoken';
 
 import User from '../Models/user.Model.js';
 import cloudinary from '../Config/Cloudinary.js';
-import { checkAuth } from '../Middleware/auth.middleware.js';
+// import { checkAuth } from '../Middleware/auth.middleware.js';
 
 const router = express.Router();
 
+
 router.post("/signup", async (req, res) => {
-    // res.status(200).send(`signup successfully`);
 
     try {
-        console.log('Request received');
 
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         console.log("Hashed Password: ", hashedPassword);
@@ -26,7 +25,6 @@ router.post("/signup", async (req, res) => {
         console.log("Image: ", uploadImage);
 
         const newUser = new User({
-            _id: new  mongoose.Types.ObjectId,
             email: req.body.email,
             password: hashedPassword,
             ChannelName: req.body.ChannelName,
@@ -38,6 +36,7 @@ router.post("/signup", async (req, res) => {
         let user = await newUser.save();
 
         res.status(201).json({user});
+
     } catch (error) {
         console.log(error);
         res.status(500).json({error: " Something went wrong", message: error.message})
@@ -61,17 +60,17 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({message: "Invalid credentials"});
         }
 
-        const token = jwt.sign(
-            {
-                _id: existingUser.id,
-                ChannelName: existingUser.ChannelName,
-                email: existingUser.email,
-                phone: existingUser.phone,
-                logoId: existingUser.logoId
-            },
-            process.env.JWT_SECRET || "defaultSecret",
-            {expiresIn: '10d'}
-    );
+    //     const token = jwt.sign(
+    //         {
+    //             _id: existingUser.id,
+    //             ChannelName: existingUser.ChannelName,
+    //             email: existingUser.email,
+    //             phone: existingUser.phone,
+    //             logoId: existingUser.logoId
+    //         },
+    //         process.env.JWT_SECRET || "defaultSecret",
+    //         {expiresIn: '10d'}
+    // );
 
     res.status(200).json({
             _id: existingUser.id,
@@ -91,7 +90,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.put("/update-profile", checkAuth, async (req, res) => {
+router.put("/update-profile", async (req, res) => {
     try {
         const {ChannelName, phone} = req.body;
         let updatedData = {ChannelName, phone};
@@ -111,7 +110,7 @@ router.put("/update-profile", checkAuth, async (req, res) => {
     }
 });
 
-router.post("/subscribe", checkAuth, async (req, res) => {
+router.post("/subscribe", async (req, res) => {
     try {
         const {ChannelId} = req.body;   //userId == currentUser & channelId ==user to subscribe (channel);
 

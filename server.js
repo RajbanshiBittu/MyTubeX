@@ -1,5 +1,4 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import fileUpload from 'express-fileupload';
 import bodyParser from 'body-parser';
 
@@ -7,7 +6,7 @@ import { ConnectDB } from './Config/db.config.js';
 import userRoutes from './Routes/user.routes.js';
 import videoRoutes from './Routes/video.routes.js';
 import commentRoutes from './Routes/comment.routes.js';
-
+import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();

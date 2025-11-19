@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 
 
 const userSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     ChannelName: {
         type: String,
         require: true
@@ -38,5 +37,3 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 
 export default User;
-
-// token = ""

@@ -4,14 +4,16 @@ import mongoose from 'mongoose';
 import User from '../Models/user.Model.js';
 import cloudinary from '../Config/Cloudinary.js';
 import videoModel from '../Models/video.Model.js';
-import { checkAuth } from '../Middleware/auth.middleware.js';
+// import { checkAuth } from '../Middleware/auth.middleware.js';
 
 const router = express.Router();
 
+
 //creating upload video endpoint
-router.post("/upload", checkAuth, async (req, res) => {
+router.post("/upload", async (req, res) => {
     try {
-        const {title, description, category, tags} = req.body;
+        const {title, description, category, tags} = req. body;
+        
         if(!req.files || !req.files.video || !req.files.thumbnail) {
             res.status(400).json({error: "Video & thumbnail are required"});
         }
@@ -51,7 +53,7 @@ router.post("/upload", checkAuth, async (req, res) => {
 });
 
 //update video endpoint (no video change only metadata & thumbnail is change)
-router.put("/update/:id", checkAuth, async (req, res) => {
+router.put("/update/:id", async (req, res) => {
     try {
         const {title, description, category, tags} = req.body;
         const videoId = req.params.id;
@@ -93,7 +95,7 @@ router.put("/update/:id", checkAuth, async (req, res) => {
 })
 
 //Delete video
-router.delete("/delete/:id", checkAuth, async (req, res)=>{
+router.delete("/delete/:id", async (req, res)=>{
 
 })
 
@@ -103,17 +105,17 @@ router.get("/all", async (req, res) => {
 })
 
 
-router.get("/my-videoes", checkAuth, async(req, res) => {
+router.get("/my-videoes", async(req, res) => {
 
 });
 
 //get video by id
-router.get("/:id", checkAuth, async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
         const videoId = req.params.id;
         const userId = req.user_id;
 
-        //use findByAndUpdate to add the userid ti the viewedBy array if not already present
+        //use findByAndUpdate to add the userid t0 the viewedBy array if not already present
         const video = await video.findIdAndUpdate(
             videoId,
             {
@@ -124,7 +126,8 @@ router.get("/:id", checkAuth, async (req, res) => {
 
         if(!video) return res.status(404).json({eror: "videoes not found"});
 
-        res.status(200).jsom({message: "Video not found"})
+        res.status(200).jsom({message: "Video not found"});
+        
     } catch (error) {
         console.error("Fetch error", error);
         res.status(500).json({message: "something went wrong"});
@@ -132,10 +135,10 @@ router.get("/:id", checkAuth, async (req, res) => {
 });
 
 
-router.get("/like", checkAuth, async (req, res) => {
+router.get("/like", async (req, res) => {
 
 })
-router.post("/dislike", checkAuth, async (req, res) => {
+router.post("/dislike", async (req, res) => {
     try {
         const {videoId} = req.body;
 

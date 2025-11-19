@@ -1,11 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Comment from '../Models/comment.Model.js';
-import { checkAuth } from '../Middleware/auth.middleware';
+// import { checkAuth } from '../Middleware/auth.middleware';
 
 const router = express.Router();
 
-router.post("/new", checkAuth, async (req, res) => {
+router.post("/new", async (req, res) => {
     try {
         const {Video_id, commentText} = req.body;
 
@@ -31,7 +31,7 @@ router.post("/new", checkAuth, async (req, res) => {
     }
 });
 
-router.delete("/:commentId", checkAuth, async (req, res) => {
+router.delete("/:commentId", async (req, res) => {
     try {
         const {commentId} = req.params;
         const comment  = await Comment.findById(commentId);
@@ -52,7 +52,7 @@ router.delete("/:commentId", checkAuth, async (req, res) => {
     }
 });
 
-router.put("/:commentId", checkAuth, async (req, res) => {
+router.put("/:commentId", async (req, res) => {
     try {
         const {commentId} = req.params;
         const {commentText} = req.body;
@@ -75,7 +75,7 @@ router.put("/:commentId", checkAuth, async (req, res) => {
     }
 });
 
-router.get("/comment/:videoId", checkAuth, async (req, res) => {
+router.get("/comment/:videoId", async (req, res) => {
     try {
         const {videoId} = req.params;
         const comments = await Comment.find({video_id: videoId}).populate('user_id', 'channelName', logoUrl).sort({createdAt: -1});
@@ -85,4 +85,6 @@ router.get("/comment/:videoId", checkAuth, async (req, res) => {
         res.status(500).json({error: 'Something went wrong', message: error.message});
     }
 })
+
+
 export default router
